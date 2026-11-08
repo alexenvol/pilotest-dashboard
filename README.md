@@ -1,42 +1,27 @@
-# Flightdeck — tableau de bord Pilotest
+# Utiliser Flightdeck
 
-Petit tableau de bord gratuit et sans compte. Il transforme un export CSV Pilotest en historique consultable, courbe de progression par test et répartition des classes Stanine. Il s'agit d'une page statique, adaptée à un hébergement local ou à GitHub Pages.
+Flightdeck transforme vos résultats Pilotest en courbes de progression, indicateurs et historique par test.
 
-## Démarrer
+## 1. Télécharger votre CSV depuis Pilotest
 
-Pour un usage local, ouvrez PowerShell dans ce dossier et lancez :
+1. Ouvrez [Pilotest](https://www.pilotest.com/fr) et connectez-vous à votre compte.
+2. Allez dans **Mon compte → Tous mes résultats**.
+3. Téléchargez l’export CSV proposé en bas de la page.
 
-   ```powershell
-   python -m http.server 8000 --bind 127.0.0.1
-   ```
+## 2. Importer le CSV dans Flightdeck
 
-Puis ouvrez [http://localhost:8000](http://localhost:8000) dans Chrome ou Edge. Choisissez **Importer un export** pour sélectionner un CSV, ou **Suivre mon CSV** pour importer et suivre un fichier.
+1. Ouvrez le site Flightdeck.
+2. Cliquez sur **Importer un export**.
+3. Sélectionnez le fichier CSV téléchargé depuis Pilotest.
 
-Les imports fusionnent les lignes et écartent les doublons.
+Les résultats s’affichent dans le tableau de bord. Les imports suivants ajoutent les nouveaux résultats et ignorent les doublons.
 
-## Publier sur GitHub Pages
+## Suivre un fichier automatiquement
 
-1. Avec GitHub Free, créez un dépôt GitHub **public** (GitHub Pages gratuit est disponible sur les dépôts publics). Le site publié sera lui aussi visible publiquement.
-2. Ajoutez `index.html`, `.nojekyll`, `.gitignore` et ce `README.md` au dépôt. **N’ajoutez jamais votre CSV personnel.**
-3. Dans GitHub, ouvrez **Settings → Pages**, sélectionnez **Deploy from a branch**, puis `main` et `/ (root)`.
-4. Une fois le déploiement terminé, ouvrez l’adresse Pages indiquée par GitHub et importez votre CSV dans votre navigateur.
+Cliquez sur **Suivre mon CSV** et sélectionnez votre export. Tant que Flightdeck reste ouvert, le navigateur relit ce fichier toutes les 60 secondes. Après avoir téléchargé un nouvel export depuis Pilotest, remplacez le fichier suivi au même emplacement et gardez le même nom.
 
-GitHub Pages héberge uniquement l’application. L’historique reste dans le stockage local de ce navigateur et cet appareil ; il ne se synchronise pas entre appareils. Utilisez HTTPS fourni par GitHub Pages pour activer la sélection de fichier suivie dans Chrome ou Edge.
+Le suivi de fichier est pris en charge par Chrome et Edge. Firefox et Safari permettent l’import manuel avec **Importer un export**.
 
-## Suivi automatique
+## Vos données
 
-Avec **Suivre mon CSV**, le navigateur relit le fichier choisi toutes les 60 secondes pendant que la page reste ouverte. Après chaque nouvel export téléchargé depuis Pilotest, enregistrez-le au même emplacement et avec le même nom pour que le navigateur voie les nouvelles lignes. La permission de lecture reste dans le navigateur et peut être redemandée après fermeture ou redémarrage. Le suivi ne tourne pas en arrière-plan si l’onglet est fermé ou suspendu. Sur un site hébergé, le navigateur ne transmet pas le CSV au serveur ; il lit le fichier localement après votre sélection.
-
-Chrome et Edge prennent en charge la sélection persistante de fichier nécessaire au suivi. Firefox et Safari peuvent importer les CSV manuellement mais ne proposent pas cette fonction de suivi de fichier dans ce tableau de bord.
-
-## Limite de connexion directe
-
-Pilotest propose l’export CSV dans « Tous mes résultats », avec les champs `test`, `score`, `stanine`, `at`. La FAQ décrit également les classes Stanine de 1 à 9 et leur variation possible lors du recalibrage des tests.
-
-Les conditions d’utilisation françaises en vigueur indiquent explicitement que l’accès automatisé (robot, aspirateur de site, copie ou mise en miroir) est interdit. Ce projet ne se connecte donc pas au compte Pilotest, n’utilise pas d’API non documentée, ne stocke aucun cookie de connexion et ne fait aucune requête vers Pilotest. Il ne peut pas télécharger le CSV lui-même : il suit uniquement un fichier que vous avez choisi localement.
-
-## Données et sauvegarde
-
-L’historique est conservé dans IndexedDB sur cet appareil et dans ce navigateur. Il n’est pas envoyé au serveur GitHub Pages. Effacer les données du navigateur supprimera aussi l’historique. Pour préserver vos données, gardez une copie des CSV source.
-
-Pour arrêter le serveur local, revenez dans PowerShell et faites `Ctrl+C`.
+Flightdeck ne se connecte pas à votre compte Pilotest. Le CSV est lu par votre navigateur et les résultats restent enregistrés dans son stockage local, sur cet appareil. Ils ne sont pas transmis au site Flightdeck. Si vous effacez les données du navigateur, l’historique Flightdeck sera supprimé ; gardez vos exports CSV comme sauvegarde.
